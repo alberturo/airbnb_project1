@@ -16,6 +16,15 @@ module.exports = (sequelize, DataTypes) => {
     {
       url: DataTypes.STRING,
       preview: DataTypes.BOOLEAN,
+      spotId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Spots",
+          key: "id",
+        },
+        onDelete: "CASCADE",
+      },
     },
     {
       sequelize,

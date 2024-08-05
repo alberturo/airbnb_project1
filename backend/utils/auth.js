@@ -9,7 +9,7 @@ const setTokenCookie = (res, user) => {
   // Create the token.
   const safeUser = {
     id: user.id,
-    username: user.firstName,
+    username: user.username,
     email: user.email,
   };
   const token = jwt.sign(
