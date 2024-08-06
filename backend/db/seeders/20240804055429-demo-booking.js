@@ -22,6 +22,12 @@ module.exports = {
             startDate: new Date("2024-09-01"),
             endDate: new Date("2024-09-07"),
           },
+          {
+            spotId: 2, // Ensure this spot exists
+            userId: 3, // Ensure this user exists
+            startDate: new Date("2024-09-01"),
+            endDate: new Date("2024-09-07"),
+          },
         ],
         options
       );

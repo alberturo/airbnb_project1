@@ -15,12 +15,54 @@ module.exports = (sequelize, DataTypes) => {
   }
   Booking.init(
     {
-      startDate: DataTypes.DATE,
-      endDate: DataTypes.DATE,
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      },
+      spotId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Spots",
+          key: "id",
+        },
+      },
+      startDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          isDate: true,
+          notEmpty: true,
+        },
+      },
+      endDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          isDate: true,
+          notEmpty: true,
+          isAfter: new Date().toISOString(),
+        },
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
     },
     {
       sequelize,
       modelName: "Booking",
+      tableName: "Bookings",
     }
   );
   return Booking;
