@@ -21,6 +21,8 @@ module.exports = {
             name: "beautiful apartment",
             description: "good green place",
             price: 150.55,
+            createdAt: new Date(),
+            updatedAt: new Date(),
           },
           {
             ownerId: 1,
@@ -33,6 +35,8 @@ module.exports = {
             name: "wild green house",
             description: "Big areas, nice backyard",
             price: 250.32,
+            createdAt: new Date(),
+            updatedAt: new Date(),
           },
           {
             ownerId: 2,
@@ -45,6 +49,8 @@ module.exports = {
             name: "big apartment",
             description: "good area",
             price: 100.55,
+            createdAt: new Date(),
+            updatedAt: new Date(),
           },
         ],
         options
@@ -61,6 +67,12 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     options.tableName = "Spots";
-    return queryInterface.bulkDelete(options, {});
+    return queryInterface.bulkDelete(
+      options,
+      {
+        ownerId: { [Op.lt]: 3 },
+      },
+      {}
+    );
   },
 };

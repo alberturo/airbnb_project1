@@ -11,25 +11,31 @@ module.exports = {
       await Booking.bulkCreate(
         [
           {
-            spotId: 1, // Ensure this spot exists
-            userId: 1, // Ensure this user exists
-            startDate: new Date("2024-08-05"),
-            endDate: new Date("2024-08-10"),
+            spotId: 1,
+            userId: 1,
+            startDate: new Date("2025-08-05"),
+            endDate: new Date("2025-08-10"),
+            createdAt: new Date(),
+            updatedAt: new Date(),
           },
           {
-            spotId: 2, // Ensure this spot exists
-            userId: 2, // Ensure this user exists
-            startDate: new Date("2024-09-01"),
-            endDate: new Date("2024-09-07"),
+            spotId: 2,
+            userId: 2,
+            startDate: new Date("2025-09-01"),
+            endDate: new Date("2025-09-07"),
+            createdAt: new Date(),
+            updatedAt: new Date(),
           },
           {
-            spotId: 2, // Ensure this spot exists
-            userId: 3, // Ensure this user exists
-            startDate: new Date("2024-09-01"),
-            endDate: new Date("2024-09-07"),
+            spotId: 2,
+            userId: 3,
+            startDate: new Date("2025-09-01"),
+            endDate: new Date("2054-09-07"),
+            createdAt: new Date(),
+            updatedAt: new Date(),
           },
         ],
-        options
+        { validate: true }
       );
     } catch (error) {
       console.error("Error seeding Bookings:", error);
@@ -43,6 +49,13 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     options.tableName = "Bookings";
-    return queryInterface.bulkDelete(options, {});
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(
+      options,
+      {
+        userId: { [Op.lt]: 3 },
+      },
+      {}
+    );
   },
 };
