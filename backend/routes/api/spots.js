@@ -1,6 +1,12 @@
 const express = require("express");
 const { check, validationResult } = require("express-validator");
-const { Spot, SpotImage } = require("../../db/models");
+const {
+  Spot,
+  SpotImage,
+  Review,
+  User,
+  ReviewImage,
+} = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
 
@@ -200,6 +206,95 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
     return res.status(500).json({
       message: "Internal Server Error",
     });
+  }
+});
+
+// Get all reviews by a spot's id
+router.get("/:spotId/reviews", async (req, res) => {
+  const { spotId } = req.params;
+
+  try {
+    // First, check if the spot exists
+    const spot = await Spot.findByPk(spotId);
+    if (!spot) {
+      return res.status(404).json({
+        message: "Spot couldn't be found",
+      });
+    }
+
+    // Fetch reviews for the spot
+    const reviews = await Review.findAll({
+      where: { spotId: spotId },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"],
+        },
+        {
+          model: ReviewImage,
+          attributes: ["id", "url"],
+        },
+      ],
+    });
+
+    res.status(200).json({ Reviews: reviews });
+  } catch (error) {
+    console.error("Error fetching reviews: ", error);
+    res.status(500).json({
+      message: "Internal Server Error",
+    });
+  }
+});
+
+//Create a Review for a Spot based on the Spot's id
+router.post("/:spotId/reviews", requireAuth, async (req, res) => {
+  const { spotId } = req.params;
+  const { review, stars } = req.body;
+  const userId = req.user.id; // Assuming req.user is set by your authentication middleware
+
+  // Validate input
+  if (!review || stars === undefined || stars < 1 || stars > 5) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: {
+        review: "Review text is required",
+        stars: "Stars must be an integer from 1 to 5",
+      },
+    });
+  }
+
+  try {
+    // Check if the spot exists
+    const spot = await Spot.findByPk(spotId);
+    if (!spot) {
+      return res.status(404).json({ message: "Spot couldn't be found" });
+    }
+
+    // Check for existing review by the same user
+    const existingReview = await Review.findOne({
+      where: { userId: userId, spotId: spotId },
+    });
+
+    if (existingReview) {
+      return res
+        .status(500)
+        .json({ message: "User already has a review for this spot" });
+    }
+
+    // Create the review
+    const newReview = await Review.create({
+      userId,
+      spotId,
+      review,
+      stars,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+
+    return res.status(201).json(newReview);
+  } catch (error) {
+    console.error("Error creating the review:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
