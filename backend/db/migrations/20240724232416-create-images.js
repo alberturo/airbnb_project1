@@ -1,13 +1,17 @@
 "use strict";
-/** @type {import('sequelize-cli').Migration} */
+
+const { sequelize } = require("../models");
+
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA; // define your schema in options object
 }
+
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Spots",
+      "Images",
       {
         id: {
           allowNull: false,
@@ -15,49 +19,23 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        ownerId: {
+        imageableType: {
+          type: Sequelize.ENUM,
+          values: ["spot", "review"],
           allowNull: false,
-          references: { model: "Users" },
-          type: Sequelize.INTEGER,
           onDelete: "CASCADE",
         },
-        address: {
-          type: Sequelize.STRING,
-          allowNull: false,
-          unique: true,
-        },
-        city: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
-        state: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
-        country: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
-        lat: {
-          type: Sequelize.DECIMAL,
-          allowNull: false,
-          unique: true,
-        },
-        lng: {
-          type: Sequelize.DECIMAL,
-          allowNull: false,
-          unique: true,
-        },
-        name: {
-          type: Sequelize.STRING(255),
-          allowNull: false,
-        },
-        description: {
-          type: Sequelize.TEXT,
-          allowNull: false,
-        },
-        price: {
+        imageableId: {
           type: Sequelize.INTEGER,
+          allowNull: false,
+          onDelete: "CASCADE",
+        },
+        url: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
+        preview: {
+          type: Sequelize.BOOLEAN,
           allowNull: false,
         },
         createdAt: {
@@ -75,7 +53,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Spots";
-    await queryInterface.dropTable(options);
+    options.tableName = "Images";
+    return queryInterface.dropTable(options);
   },
 };

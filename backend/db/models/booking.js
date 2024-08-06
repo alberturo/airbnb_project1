@@ -9,60 +9,54 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Booking.belongsTo(models.User, { foreignKey: "userId" });
-      Booking.belongsTo(models.Spot, { foreignKey: "spotId" });
+      Booking.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
+      Booking.belongsTo(models.Spot, {
+        foreignKey: "spotId",
+      });
     }
   }
   Booking.init(
     {
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: "Users",
-          key: "id",
-        },
-      },
       spotId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "Spots",
-          key: "id",
-        },
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       startDate: {
         type: DataTypes.DATE,
         allowNull: false,
         validate: {
-          isDate: true,
-          notEmpty: true,
+          notNull: { msg: "Start date is required" },
+          isDate: { msg: "Start date must be a valid date" },
+          isAfterToday(value) {
+            if (new Date(value) <= new Date()) {
+              throw new Error("Start date must be after today");
+            }
+          },
         },
       },
       endDate: {
         type: DataTypes.DATE,
         allowNull: false,
         validate: {
-          isDate: true,
-          notEmpty: true,
-          isAfter: new Date().toISOString(),
+          notNull: { msg: "End date is required" },
+          isDate: { msg: "End date must be a valid date" },
+          isAfterStartDate(value) {
+            if (new Date(value) <= new Date(this.startDate)) {
+              throw new Error("End date must be after start date");
+            }
+          },
         },
-      },
-      createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
     },
     {
       sequelize,
       modelName: "Booking",
-      tableName: "Bookings",
     }
   );
   return Booking;

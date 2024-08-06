@@ -9,9 +9,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Review.belongsTo(models.User, { foreignKey: "userId" });
-      Review.belongsTo(models.Spot, { foreignKey: "spotId" });
-      Review.hasMany(models.ReviewImage, { foreignKey: "reviewId" });
+      Review.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
+      Review.belongsTo(models.Spot, {
+        foreignKey: "spotId",
+      });
+      Review.hasMany(models.Image, {
+        foreignKey: "imageableId",
+        constraints: false,
+        as: "ReviewImages",
+        onDelete: "cascade",
+        hooks: true,
+        scope: {
+          imageableType: "review",
+        },
+      });
     }
   }
   Review.init(
@@ -19,44 +32,28 @@ module.exports = (sequelize, DataTypes) => {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "Users",
-          key: "id",
-        },
       },
       spotId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "Spots",
-          key: "id",
-        },
       },
       review: {
         type: DataTypes.TEXT,
         allowNull: false,
         validate: {
-          notEmpty: true, // ensures the review is not empty
+          notNull: { msg: "Review is required" },
+          notEmpty: { msg: "Review cannot be empty" },
         },
       },
       stars: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          isInt: true,
+          notNull: { msg: "Stars are required" },
+          isInt: { msg: "Stars must be an integer" },
           min: 1,
-          max: 5, // reviews are rated from 1 to 5
+          max: 5,
         },
-      },
-      createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
     },
     {

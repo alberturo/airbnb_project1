@@ -86,6 +86,7 @@ router.get("/", async (req, res) => {
 //     res.status(500).json({ message: "Internal server error" });
 //   }
 // });
+
 //Get details of a Spot from an id
 router.get("/current", requireAuth, async (req, res, next) => {
   try {
