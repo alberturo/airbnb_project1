@@ -1,5 +1,3 @@
-// TODO  edit safeUser, it needs username
-
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const { check } = require("express-validator");
@@ -15,6 +13,19 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isEmail()
     .withMessage("Please provide a valid email."),
+  check("firstName")
+    .exists({ checkFalsy: true })
+    .isString()
+    .withMessage("firstName cannot be a number"),
+  check("firstName")
+    .not()
+    .isEmail()
+    .withMessage("firstName cannot be an email."),
+  check("lastName")
+    .exists({ checkFalsy: true })
+    .isString()
+    .withMessage("lastName cannot be a number"),
+  check("lastName").not().isEmail().withMessage("lastName cannot be an email."),
   check("username")
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
@@ -47,7 +58,7 @@ router.post("/", validateSignup, async (req, res) => {
   };
 
   await setTokenCookie(res, safeUser);
-
+  res.status(201);
   return res.json({
     user: safeUser,
   });
