@@ -8,7 +8,7 @@ const addUser = (payload) => ({
   payload,
 });
 
-const removeUser = () => {
+export const removeUser = () => {
   type: REMOVE_USER;
 };
 
@@ -34,6 +34,20 @@ export const restoreUser = () => async (dispatch) => {
     return res;
   }
 };
+
+export const signUp =
+  ({ email, username, firstName, lastName, password }) =>
+  async (dispatch) => {
+    let res = await csrfFetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify({ email, username, firstName, lastName, password }),
+    });
+    if (res.ok) {
+      res = await res.json();
+      dispatch(addUser(res));
+      return res;
+    }
+  };
 
 const initialState = { user: null };
 
