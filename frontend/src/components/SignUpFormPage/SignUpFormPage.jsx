@@ -11,21 +11,31 @@ const SignUpFormPage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  // if (currUser) return <Navigate to="/" replace={true} />;
+  if (currUser) return <Navigate to="/" replace={true} />;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = {
-      email,
-      username,
-      firstName,
-      lastName,
-      password,
-    };
-    const res = dispatch(signUp(user));
-    if (res.errors) setErrors(res.errors);
+    if (password === confirmPassword) {
+      setErrors({});
+      const user = {
+        email,
+        username,
+        firstName,
+        lastName,
+        password,
+        password,
+      };
+      dispatch(signUp(user)).catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) {
+          setErrors(data.errors);
+        }
+      });
+      return <Navigate to="/" replace={true} />;
+    }
   };
   return (
     <>
@@ -59,15 +69,15 @@ const SignUpFormPage = () => {
           />
         </label>
         <label>
-          <label>
-            Last Name
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-          </label>
+          Last Name
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </label>
+        <label>
           password
           <input
             type="password"
@@ -76,7 +86,17 @@ const SignUpFormPage = () => {
             required
           />
         </label>
-        {errors.credential && <p>{errors.credential}</p>}
+        <label>
+          Confirm password
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </label>
+        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {/* {errors.credential && <p>{errors.credential}</p>} */}
         <button type="submit">Sign Up</button>
       </form>
     </>
