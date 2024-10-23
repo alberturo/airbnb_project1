@@ -1,30 +1,21 @@
 import { csrfFetch } from "./csrf";
 
-const ADD_USER = "session/addUser";
+const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
 
-const addUser = (payload) => ({
-  type: ADD_USER,
-  payload,
-});
-
-export const removeUser = () => {
-  type: REMOVE_USER;
+const setUser = (user) => {
+  return {
+    type: SET_USER,
+    payload: user,
+  };
 };
 
-// export const login =
-//   ({ credential, password }) =>
-//   async (dispatch) => {
-//     let res = await csrfFetch("/api/session", {
-//       method: "POST",
-//       body: JSON.stringify({ credential, password }),
-//     });
-//     if (res.ok) {
-//       res = await res.json();
-//       dispatch(addUser(res));
-//       return res;
-//     }
-//   };
+const removeUser = () => {
+  return {
+    type: REMOVE_USER,
+  };
+};
+
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch("/api/session", {
@@ -35,33 +26,34 @@ export const login = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  dispatch(addUser(data.user));
+  dispatch(setUser(data.user));
   return response;
 };
 
 export const restoreUser = () => async (dispatch) => {
-  let res = await csrfFetch("/api/session");
-  if (res.ok) {
-    res = await res.json();
-    dispatch(addUser(res));
-    return res;
-  }
+  const response = await csrfFetch("/api/session");
+  const data = await response.json();
+  dispatch(setUser(data.user));
+  return response;
 };
 
-export const signUp =
-  ({ email, username, firstName, lastName, password }) =>
-  async (dispatch) => {
-    let res = await csrfFetch("/api/users", {
-      method: "POST",
-      body: JSON.stringify({ email, username, firstName, lastName, password }),
-    });
-    if (res.ok) {
-      res = await res.json();
-      console.log(res);
-      dispatch(addUser(res));
-      return res;
-    }
-  };
+export const signup = (user) => async (dispatch) => {
+  const { username, firstName, lastName, email, password } = user;
+  const response = await csrfFetch("/api/users", {
+    method: "POST",
+    body: JSON.stringify({
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+    }),
+  });
+  const data = await response.json();
+  dispatch(setUser(data.user));
+  return response;
+};
+
 export const logout = () => async (dispatch) => {
   const response = await csrfFetch("/api/session", {
     method: "DELETE",
@@ -72,23 +64,9 @@ export const logout = () => async (dispatch) => {
 
 const initialState = { user: null };
 
-// const session = (state = initialState, action) => {
-//   switch (action.type) {
-//     case ADD_USER: {
-//       const newState = { ...state };
-//       newState.user = action.payload;
-//       return newState;
-//     }
-//     case REMOVE_USER: {
-//       return { user: null };
-//     }
-//     default:
-//       return state;
-//   }
-// };
-const session = (state = initialState, action) => {
+const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_USER:
+    case SET_USER:
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
@@ -97,4 +75,4 @@ const session = (state = initialState, action) => {
   }
 };
 
-export default session;
+export default sessionReducer;
