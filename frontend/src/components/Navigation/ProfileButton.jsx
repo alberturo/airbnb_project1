@@ -2,16 +2,22 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 import * as sessionActions from "../../store/session";
-import "./Navigation.css";
+import OpenModalMenuItem from "./OpenModalMenuItem";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { LuLogIn } from "react-icons/lu";
+import { LuPencil } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
-function ProfileButton({ user }) {
+export const ProfileButton = ({ user }) => {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep click from bubbling up to document and triggering closeMenu
-    // if (!showMenu) setShowMenu(true);
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -19,7 +25,7 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (ulRef.current && !ulRef.current.contains(e.target)) {
+      if (!ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
@@ -29,30 +35,76 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  const handleLogout = (e) => {
+  const closeMenu = () => setShowMenu(false);
+
+  const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    closeMenu();
+    navigate("/");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+      <button onClick={toggleMenu} className="profile-button">
+        <GiHamburgerMenu
+          className="hamburger-icon"
+          size={20}
+          style={{ color: "#ebf5f0" }}
+        />
+        <FaUserCircle
+          className="profile-icon"
+          size={20}
+          style={{ color: "#ebf5f0" }}
+        />
       </button>
       <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>
-          {user.firstName} {user.lastName}
-        </li>
-        <li>{user.email}</li>
-        <li>
-          <button onClick={handleLogout}>Log Out</button>
-        </li>
+        {user ? (
+          <>
+            <li>{`Hello, ${user.firstName}`}</li>
+            <li>{user.email}</li>
+            <li
+              onClick={() => navigate("/spots/current")}
+              style={{
+                borderTop: "1px solid black",
+                borderBottom: "1px solid black",
+                cursor: "pointer",
+              }}
+            >
+              Manage Spots
+            </li>
+            <li
+              onClick={() => navigate("/reviews/current")}
+              style={{
+                borderBottom: "1px solid black",
+                cursor: "pointer",
+              }}
+            >
+              Manage Reviews
+            </li>
+            <li className="logout-btn">
+              <button onClick={logout}>Log Out</button>
+            </li>
+          </>
+        ) : (
+          <>
+            <OpenModalMenuItem
+              itemIcon={<LuLogIn />}
+              itemText="Log In"
+              onItemClick={closeMenu}
+              modalComponent={<LoginFormModal />}
+            />
+            <OpenModalMenuItem
+              itemIcon={<LuPencil />}
+              itemText="Sign Up"
+              onItemClick={closeMenu}
+              modalComponent={<SignupFormModal />}
+            />
+          </>
+        )}
       </ul>
     </>
   );
-}
-
-export default ProfileButton;
+};

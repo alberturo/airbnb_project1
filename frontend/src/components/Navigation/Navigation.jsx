@@ -1,72 +1,39 @@
-// import { NavLink } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import ProfileButton from "./ProfileButton";
-
-// function Navigation({ isLoaded }) {
-//   const sessionUser = useSelector((state) => state.session.user?.user);
-//   const dispatch = useDispatch();
-//   const logout = (e) => {
-//     e.preventDefault();
-//     dispatch(logout());
-//   };
-//   const sessionLinks = sessionUser ? (
-//     <>
-//       <li>
-//         <ProfileButton user={sessionUser} />
-//       </li>
-//     </>
-//   ) : (
-//     <>
-//       <li>
-//         <NavLink to="/login">Log In</NavLink>
-//       </li>
-//       <li>
-//         <NavLink to="/signup">Sign Up</NavLink>
-//       </li>
-//     </>
-//   );
-
-//   return (
-//     <>
-//       <NavLink to="/">Home</NavLink>
-//       <ul>{isLoaded && sessionLinks}</ul>
-//     </>
-//   );
-// }
-
-// export default Navigation;
-
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import ProfileButton from "./ProfileButton";
+import { useDispatch, useSelector } from "react-redux";
+import { ProfileButton } from "./ProfileButton";
+import { FaAirbnb } from "react-icons/fa";
 import "./Navigation.css";
+import { useEffect } from "react";
+import { getUserReviews } from "../../store/reviews";
 
-function Navigation({ isLoaded }) {
-  const sessionUser = useSelector((state) => state.session.user?.user);
+export const Navigation = ({ isLoaded }) => {
+  const sessionUser = useSelector((state) => state.session.user);
+  const dispatch = useDispatch();
 
-  const sessionLinks = sessionUser ? (
-    <li>
-      <ProfileButton user={sessionUser} />
-    </li>
-  ) : (
-    <>
-      <li>
-        <NavLink to="/login">Log In</NavLink>
-      </li>
-      <li>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </li>
-    </>
-  );
+  useEffect(() => {
+    if (sessionUser) dispatch(getUserReviews());
+  }, [dispatch, sessionUser]);
 
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      {isLoaded && sessionLinks}
-    </ul>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <NavLink to="/" className="home-link">
+              <FaAirbnb />
+              <h3>The Continental</h3>
+            </NavLink>
+          </li>
+          {isLoaded && (
+            <li className="list-profile-button">
+              {sessionUser && (
+                <NavLink to={"/spots/new"}>Create a New Spot</NavLink>
+              )}
+              <ProfileButton user={sessionUser} className="profile-button" />
+            </li>
+          )}
+        </ul>
+      </nav>
+    </header>
   );
-}
-
-export default Navigation;
+};

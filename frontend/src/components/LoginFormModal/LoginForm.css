@@ -1,0 +1,55 @@
+form {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  margin: 20px;
+  font-family: sans-serif;
+}
+
+#modal-content {
+  top: 100px;
+  border-radius: 5px;
+  background: linear-gradient(to bottom, #cfebff, white, #032680);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#modal-content textarea::placeholder {
+  opacity: 0.5;
+  color: gray;
+}
+
+form h1 {
+  text-align: center;
+  margin: 0;
+}
+
+label {
+  padding: 6px 0px 6px;
+}
+
+.login-form input::placeholder {
+  opacity: 0.5;
+  color: gray;
+}
+
+.login-button {
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.login-button:hover {
+  font-weight: bold;
+  transform: scale(1.01);
+}
+
+.demo-user {
+  margin-top: 20px;
+  color: #1a42a0;
+  text-decoration: underline;
+}
