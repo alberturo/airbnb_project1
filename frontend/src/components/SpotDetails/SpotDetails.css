@@ -1,0 +1,185 @@
+.spot-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.spot-details {
+  padding: 5px;
+}
+
+.spot-details .flex-container {
+  display: flex;
+  gap: 2px;
+  padding: 0;
+  border: 2px solid #fe3bf1;
+  border-radius: 5px;
+}
+
+.preview-image {
+  flex: 1;
+}
+
+.preview-image img,
+.grid-container img {
+  height: 100%;
+  max-height: 100%;
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  flex: 1;
+  gap: 2px;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.reserve-info {
+  display: flex;
+  padding: 5px;
+  gap: 2rem;
+}
+
+.host-info {
+  flex: 2;
+}
+
+.reserve-cost {
+  border: 1px solid #fe3bf1;
+  background-color: #020a15;
+  color: #ebf5f0;
+  border-radius: 5px;
+  height: fit-content;
+  padding: 10px;
+  flex: 1;
+}
+
+.reserve-cost p {
+  text-align: end;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.reserve-cost li {
+  width: 100%;
+}
+
+.reserve-cost ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+.reserve-button {
+  width: 100%;
+  background-color: #fe3bf1;
+  height: 30px;
+  border-radius: 10px;
+  box-shadow: 1px 3px gray;
+  color: color;
+  cursor: pointer;
+}
+
+#post-review-btn {
+  box-shadow: 1px 3px;
+  background-color: #fe3bf1;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.reserve-button:hover,
+#post-review-btn:hover {
+  font-weight: bold;
+  transform: scale(1.01);
+}
+
+.price-review {
+  display: flex;
+  justify-content: space-between;
+}
+
+#rating-icon-reviews {
+  display: flex;
+  flex-direction: row;
+}
+
+#rating-icon-reviews span {
+  display: flex;
+}
+
+body {
+  height: fit-content;
+}
+
+.reviews {
+  border-top: 2px solid #fe3bf1;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.reviews ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 0;
+  gap: 1.5rem;
+}
+
+.reviews li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.reviews li h4,
+p {
+  margin: 0;
+}
+
+.reviews h3 {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+
+.date {
+  color: white;
+  opacity: 0.33;
+}
+
+.update-delete button {
+  background-color: #fe3bf1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.update-delete button:hover {
+  font-weight: bold;
+  transform: scale(1.01);
+}
+
+#heading-review-count {
+  display: flex;
+  align-items: center;
+}
+
+main {
+  min-height: 100%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,75 @@
+.main-container {
+  padding: 1rem;
+}
+
+.main-container button {
+  background-color: #fe3bf1;
+}
+
+.update-delete {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.card-container {
+  max-width: 25%;
+  flex: 1 1 20%;
+}
+
+.card-container .flex-item {
+  max-width: 100%;
+}
+
+.manage-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+
+.manage-heading {
+  width: max-content;
+  margin-bottom: 5px;
+}
+
+#modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.confirm-delete-modal {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#yes-button {
+  background-color: red;
+  color: white;
+  width: 100%;
+  padding: 0;
+  height: 1.5rem;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 1px 3px black;
+}
+
+#no-button {
+  background-color: gray;
+  color: white;
+  width: 100%;
+  padding: 0;
+  height: 1.5rem;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 1px 3px black;
+}
+
+.confirm-delete-modal button:hover {
+  font-weight: bold;
+  transform: scale(1.01);
+}
