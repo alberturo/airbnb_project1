@@ -8,6 +8,7 @@ import SpotDetails from "./components/SpotDetails";
 import NewSpotPage from "./components/NewSpotPage";
 import ManageSpots from "./components/ManageSpots";
 import UpdateSpot from "./components/UpdateSpot";
+import { ManageReviews } from "./components/ManageReviews/ManageReviews";
 
 function Layout() {
   const dispatch = useDispatch();

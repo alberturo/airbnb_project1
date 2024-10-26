@@ -1,0 +1,15 @@
+.manage-reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.manage-reviews-list button {
+  background-color: #fe3bf1;
+}
+
+.manage-reviews-list button:hover {
+  font-weight: bold;
+  transform: scale(1.01);
+  cursor: pointer;
+}
