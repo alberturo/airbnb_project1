@@ -429,7 +429,7 @@ router.get("/current", requireAuth, async (req, res) => {
   });
 
   const spotsWithAvgRating = userSpots.map((spot) => {
-    const avgRating = parseFloat(spot.get("avgRating")) || 0;
+    const avgRating = parseFloat(spot.get("avgRating")) || 5;
     return {
       ...spot.toJSON(),
       avgRating,

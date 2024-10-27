@@ -15,8 +15,8 @@
   max-width: 23.2%;
   flex: 1 1 20%;
   max-height: 100%;
-  background-color: #ebf5f0;
-  border: 3px solid #fe3bf1;
+  /* background-color: gray; */
+  border: 3px solid #767676;
 }
 
 .flex-item img {

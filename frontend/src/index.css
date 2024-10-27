@@ -1,4 +1,5 @@
 /* TODO: Add sitewide styles */
+
 h1,
 h2,
 h3,
@@ -10,6 +11,7 @@ h5 {
 
 body,
 html {
+  font-family: "Nunito Sans", sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -23,8 +25,8 @@ main {
 body {
   display: flex;
   flex-direction: column;
-  /* background-color: #032680; */
-  background: linear-gradient(to bottom, #cfebff, #032680);
+  background-color: #fff;
+  /* background: linear-gradient(to bottom, #cfebff, #032680); */
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;

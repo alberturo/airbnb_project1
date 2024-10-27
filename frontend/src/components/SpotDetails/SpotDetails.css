@@ -11,7 +11,7 @@
   display: flex;
   gap: 2px;
   padding: 0;
-  border: 2px solid #fe3bf1;
+  border: 2px solid #767676;
   border-radius: 5px;
 }
 
@@ -50,9 +50,9 @@
 }
 
 .reserve-cost {
-  border: 1px solid #fe3bf1;
-  background-color: #020a15;
-  color: #ebf5f0;
+  border: 1px solid #767676;
+  /* background-color: #020a15; */
+  color: #020a15;
   border-radius: 5px;
   height: fit-content;
   padding: 10px;
@@ -82,7 +82,7 @@
 
 .reserve-button {
   width: 100%;
-  background-color: #fe3bf1;
+  background-color: #ff5a5f;
   height: 30px;
   border-radius: 10px;
   box-shadow: 1px 3px gray;
@@ -92,7 +92,7 @@
 
 #post-review-btn {
   box-shadow: 1px 3px;
-  background-color: #fe3bf1;
+  background-color: #00a699;
   border-radius: 10px;
   margin-top: 10px;
   cursor: pointer;
@@ -123,7 +123,7 @@ body {
 }
 
 .reviews {
-  border-top: 2px solid #fe3bf1;
+  border-top: 2px solid #767676;
   margin-left: 5px;
   margin-right: 5px;
 }
@@ -162,7 +162,7 @@ p {
 }
 
 .update-delete button {
-  background-color: #fe3bf1;
+  background-color: #ff5a5f;
   border-radius: 10px;
   cursor: pointer;
 }

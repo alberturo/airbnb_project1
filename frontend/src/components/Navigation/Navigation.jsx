@@ -15,13 +15,13 @@ export const Navigation = ({ isLoaded }) => {
   }, [dispatch, sessionUser]);
 
   return (
-    <header>
+    <header style={{ alignContent: "center" }}>
       <nav>
         <ul>
           <li>
             <NavLink to="/" className="home-link">
-              <FaAirbnb />
-              <h3>The Continental</h3>
+              <FaAirbnb style={{ height: "50px", width: "50px" }} />
+              {/* <h3>The Continental</h3> */}
             </NavLink>
           </li>
           {isLoaded && (

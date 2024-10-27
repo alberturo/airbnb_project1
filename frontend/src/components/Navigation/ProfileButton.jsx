@@ -52,12 +52,12 @@ export const ProfileButton = ({ user }) => {
         <GiHamburgerMenu
           className="hamburger-icon"
           size={20}
-          style={{ color: "#ebf5f0" }}
+          style={{ color: "gray" }}
         />
         <FaUserCircle
           className="profile-icon"
           size={20}
-          style={{ color: "#ebf5f0" }}
+          style={{ color: "gray" }}
         />
       </button>
       <ul className={ulClassName} ref={ulRef}>
