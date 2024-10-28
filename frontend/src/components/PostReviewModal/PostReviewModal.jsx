@@ -44,7 +44,7 @@ export const PostReviewModal = ({ spotId, setDisplayNone }) => {
         <textarea
           type="text"
           value={review}
-          placeholder="Just a quick review."
+          placeholder="Leave your review here..."
           onChange={(e) => setReview(e.target.value)}
           required
         ></textarea>

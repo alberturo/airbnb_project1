@@ -102,6 +102,10 @@ input {
 
 #submit-form-btn {
   margin-top: 20px;
-  background-color: #fe3bf1;
+  padding: 3%;
+  color: black;
+  font-size: medium;
+  font-weight: 700;
+  background-color: #ff5a5f;
   border-radius: 10px;
 }
