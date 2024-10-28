@@ -61,7 +61,7 @@ export const LoginFormModal = () => {
         <button
           type="submit"
           className="login-button"
-          disabled={credential < 4 || password < 6}
+          disabled={credential.length < 4 || password.length < 6}
         >
           Log In
         </button>
